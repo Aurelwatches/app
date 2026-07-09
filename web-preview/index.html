@@ -64,8 +64,8 @@
           <div class="quick-actions">
             <button class="quick-tile" id="qa-goals"><span class="icon accent icon-slot" data-icon="target" data-size="18"></span><span class="label">Goals</span></button>
             <button class="quick-tile" data-tab="history"><span class="icon accent icon-slot" data-icon="history" data-size="18"></span><span class="label">History</span></button>
-            <button class="quick-tile" data-tab="insights"><span class="icon accent icon-slot" data-icon="chartBar" data-size="18"></span><span class="label">Insights</span></button>
-            <button class="quick-tile" data-tab="profile"><span class="icon accent icon-slot" data-icon="settings" data-size="18"></span><span class="label">Settings</span></button>
+            <button class="quick-tile" data-tab="leaderboard"><span class="icon accent icon-slot" data-icon="trophy" data-size="18"></span><span class="label">Leaderboard</span></button>
+            <button class="quick-tile" data-tab="settings"><span class="icon accent icon-slot" data-icon="settings" data-size="18"></span><span class="label">Settings</span></button>
           </div>
 
           <div class="message-card">
@@ -83,8 +83,72 @@
           <div id="goal-groups"></div>
         </section>
 
-        <!-- Insights -->
+        <!-- Leaderboard -->
+        <section id="page-leaderboard" class="page">
+          <div class="tasks-header">
+            <div class="title">Leaderboard</div>
+            <div class="subtitle">This week</div>
+          </div>
+          <div id="podium" class="podium"></div>
+          <div id="leaderboard-list" class="leaderboard-list"></div>
+        </section>
+
+        <!-- Profile (hub) -->
+        <section id="page-profile" class="page">
+          <div class="profile-header">
+            <div class="avatar">B</div>
+            <div class="profile-name">Braydon</div>
+            <div class="level-badge">Lvl 7</div>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-label"><span class="icon-slot warm" data-icon="flame" data-size="15"></span>Streak</div>
+              <div class="stat-value">12 days</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label"><span class="icon-slot accent" data-icon="star" data-size="15"></span>Next level</div>
+              <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+              <div class="bar-caption">340/500 xp</div>
+            </div>
+          </div>
+
+          <div class="section-label">Menu</div>
+          <div class="group-card">
+            <div class="settings-row" data-tab="history">
+              <span class="icon-slot" data-icon="history" data-size="18"></span>
+              <span class="row-label">History</span>
+              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
+            </div>
+            <div class="settings-row" data-tab="settings">
+              <span class="icon-slot" data-icon="settings" data-size="18"></span>
+              <span class="row-label">Settings</span>
+              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- History -->
+        <section id="page-history" class="page">
+          <div class="subpage-header">
+            <button class="back-btn" data-tab="profile"><span class="icon-slot" data-icon="chevronLeft" data-size="18"></span></button>
+            <span class="subpage-title">History</span>
+            <div style="width:26px;"></div>
+          </div>
+          <div class="empty-state">
+            <div class="empty-icon"><span class="icon-slot" data-icon="history" data-size="24"></span></div>
+            <div class="empty-title">Your history will build up here</div>
+            <div class="empty-body">Every completed day gets logged — check back after your first full day for a week-by-week view.</div>
+          </div>
+        </section>
+
+        <!-- Insights (reached from Settings > Screen time) -->
         <section id="page-insights" class="page">
+          <div class="subpage-header">
+            <button class="back-btn" data-tab="settings"><span class="icon-slot" data-icon="chevronLeft" data-size="18"></span></button>
+            <span class="subpage-title">Usage insights</span>
+            <div style="width:26px;"></div>
+          </div>
           <div class="empty-state">
             <div class="empty-icon"><span class="icon-slot" data-icon="chartBar" data-size="24"></span></div>
             <div class="empty-title">Insights are on the way</div>
@@ -93,24 +157,56 @@
           </div>
         </section>
 
-        <!-- Profile -->
-        <section id="page-profile" class="page">
-          <div class="profile-header">
-            <div class="avatar">B</div>
-            <div class="profile-name">Braydon</div>
-            <div class="level-badge">Lvl 7</div>
+        <!-- Settings -->
+        <section id="page-settings" class="page">
+          <div class="subpage-header">
+            <button class="back-btn" data-tab="profile"><span class="icon-slot" data-icon="chevronLeft" data-size="18"></span></button>
+            <span class="subpage-title">Settings</span>
+            <div style="width:26px;"></div>
           </div>
-          <div class="section-label">Leaderboard</div>
-          <div id="podium" class="podium"></div>
-          <div id="leaderboard-list" class="leaderboard-list"></div>
-        </section>
 
-        <!-- History (reached via quick action, not a tab) -->
-        <section id="page-history" class="page">
-          <div class="empty-state">
-            <div class="empty-icon"><span class="icon-slot" data-icon="history" data-size="24"></span></div>
-            <div class="empty-title">Your history will build up here</div>
-            <div class="empty-body">Every completed day gets logged — check back after your first full day for a week-by-week view.</div>
+          <div class="section-label">Notifications</div>
+          <div class="group-card">
+            <div class="settings-row">
+              <span class="row-label">Morning message</span>
+              <span class="row-value">8:00 AM</span>
+              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
+            </div>
+            <div class="settings-row">
+              <span class="row-label">Check-in reminders</span>
+              <div class="toggle on" id="toggle-checkins"></div>
+            </div>
+            <div class="settings-row">
+              <span class="row-label">Message style</span>
+              <span class="row-value">Coach</span>
+              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
+            </div>
+          </div>
+
+          <div class="section-label">Screen time</div>
+          <div class="group-card">
+            <div class="settings-row">
+              <span class="row-label">App limits</span>
+              <span class="row-value">Instagram &middot; 45 min/day</span>
+              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
+            </div>
+            <div class="settings-row">
+              <span class="icon-slot accent" data-icon="shield" data-size="16"></span>
+              <span class="row-label">Streak freezes</span>
+              <span class="row-value">2 available</span>
+            </div>
+            <div class="settings-row" data-tab="insights">
+              <span class="row-label">Usage insights</span>
+              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
+            </div>
+          </div>
+
+          <div class="section-label">Appearance</div>
+          <div class="group-card" style="padding:14px;">
+            <div class="row-label" style="margin-bottom:10px;">Theme</div>
+            <div class="theme-swatches" id="theme-swatches"></div>
+            <div class="row-label" style="margin:18px 0 10px;">Appearance</div>
+            <div class="segmented" id="appearance-segmented"></div>
           </div>
         </section>
 
@@ -121,7 +217,7 @@
       <div class="tab-bar">
         <button class="tab active" data-tab="today"><span class="icon icon-slot" data-icon="home" data-size="20"></span>Today</button>
         <button class="tab" data-tab="tasks"><span class="icon icon-slot" data-icon="checklist" data-size="20"></span>Tasks</button>
-        <button class="tab" data-tab="insights"><span class="icon icon-slot" data-icon="chartBar" data-size="20"></span>Insights</button>
+        <button class="tab" data-tab="leaderboard"><span class="icon icon-slot" data-icon="trophy" data-size="20"></span>Leaderboard</button>
         <button class="tab" data-tab="profile"><span class="icon icon-slot" data-icon="person" data-size="20"></span>Profile</button>
       </div>
 

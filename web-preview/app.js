@@ -264,6 +264,53 @@ document.getElementById("goal-cta").addEventListener("click", () => {
   }
 });
 
+// ---- Settings ----
+
+const themes = [
+  { name: "Amber", color: "#E2A146", locked: false },
+  { name: "Slate", locked: true },
+  { name: "Sage", locked: true },
+];
+let selectedTheme = "Amber";
+
+function renderThemeSwatches() {
+  const el = document.getElementById("theme-swatches");
+  el.innerHTML = themes.map(t => {
+    if (t.locked) {
+      return `<div class="theme-swatch locked">${icon("lock", 11)}</div>`;
+    }
+    return `<div class="theme-swatch ${t.name === selectedTheme ? "selected" : ""}" style="background:${t.color}" data-theme="${t.name}"></div>`;
+  }).join("");
+
+  el.querySelectorAll(".theme-swatch[data-theme]").forEach(swatch => {
+    swatch.addEventListener("click", () => {
+      selectedTheme = swatch.dataset.theme;
+      renderThemeSwatches();
+    });
+  });
+}
+
+const appearanceModes = ["System", "Light", "Dark"];
+let selectedAppearance = "Dark";
+
+function renderAppearanceSegmented() {
+  const el = document.getElementById("appearance-segmented");
+  el.innerHTML = appearanceModes.map(mode => `
+    <div class="seg-btn ${mode === selectedAppearance ? "selected" : ""}" data-mode="${mode}">${mode}</div>
+  `).join("");
+
+  el.querySelectorAll(".seg-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectedAppearance = btn.dataset.mode;
+      renderAppearanceSegmented();
+    });
+  });
+}
+
+document.getElementById("toggle-checkins").addEventListener("click", (e) => {
+  e.target.classList.toggle("on");
+});
+
 // ---- Init ----
 
 hydrateIcons();
@@ -271,3 +318,5 @@ renderDayStrip();
 renderTasks();
 updateRing();
 renderLeaderboard();
+renderThemeSwatches();
+renderAppearanceSegmented();
