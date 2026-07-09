@@ -8,7 +8,7 @@
 :root {
   --bg: #0B0B0D;
   --card: #18181B;
-  --card-border: rgba(255, 255, 255, 0.055);
+  --card-border: var(--overlay-2);
   --divider: #2C2C2E;
   --locked-fill: #1C1C1F;
   --accent: #E2A146;
@@ -21,7 +21,39 @@
   --text-disabled: #5A5A5E;
   --warm: #E0997A;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Tiered hover/press overlays — white-tinted for dark surfaces */
+  --overlay-1: rgba(255, 255, 255, 0.025);
+  --overlay-2: rgba(255, 255, 255, 0.055);
+  --overlay-3: rgba(255, 255, 255, 0.1);
+  --hover-fill: #202024;
+  --text-loud: #E4E4E7;
 }
+
+/* ---- Light theme override ---- */
+
+.screen.light-theme {
+  --bg: #F7F7F5;
+  --card: #FFFFFF;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --divider: #E5E4E1;
+  --locked-fill: #EFEEEC;
+  --accent: #C9822E;
+  --accent-hover: #B8741F;
+  --accent-fill: #FCEBD3;
+  --accent-on-fill: #8A5A16;
+  --text-primary: #1C1C1E;
+  --text-secondary: #6B6B70;
+  --text-tertiary: #8E8E93;
+  --text-disabled: #B9B9BD;
+  --warm: #C97A5C;
+  --overlay-1: rgba(0, 0, 0, 0.035);
+  --overlay-2: rgba(0, 0, 0, 0.06);
+  --overlay-3: rgba(0, 0, 0, 0.09);
+  --hover-fill: #EFEEEC;
+  --text-loud: #2C2C2E;
+}
+
 
 body {
   background: #e4e3e0;
@@ -127,7 +159,7 @@ body {
   font-variant-numeric: tabular-nums;
   padding: 6px 12px;
   border-radius: 999px;
-  border: none;
+  border: 1px solid var(--accent);
 }
 
 /* ---- Reusable "this is a button" reset ---- */
@@ -140,7 +172,7 @@ body {
 }
 
 .clickable:hover {
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--overlay-3);
 }
 
 .clickable:active {
@@ -148,7 +180,7 @@ body {
 }
 
 button.level-badge.clickable:hover {
-  background: #6b4718;
+  filter: brightness(1.15);
 }
 
 /* ---- Day strip ---- */
@@ -164,6 +196,16 @@ button.level-badge.clickable:hover {
 .day-cell.missed .letter,
 .day-cell.missed .num {
   color: var(--text-tertiary);
+}
+
+#streak-strip .day-cell {
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.15s var(--ease);
+}
+
+#streak-strip .day-cell:hover {
+  background: var(--overlay-2);
 }
 
 .day-cell {
@@ -384,8 +426,8 @@ button.level-badge.clickable:hover {
 }
 
 .quick-tile:hover {
-  background: #202024;
-  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--hover-fill);
+  border-color: var(--overlay-3);
 }
 
 .quick-tile:active {
@@ -423,7 +465,7 @@ button.level-badge.clickable:hover {
 
 .message-card .body {
   font-size: 13px;
-  color: #E4E4E7;
+  color: var(--text-loud);
   line-height: 1.5;
 }
 
@@ -466,11 +508,11 @@ button.level-badge.clickable:hover {
 }
 
 .task-row:hover {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--overlay-1);
 }
 
 .task-row:active {
-  background: rgba(255, 255, 255, 0.045);
+  background: var(--overlay-2);
 }
 
 .task-row + .task-row {
@@ -621,7 +663,7 @@ button.level-badge.clickable:hover {
 }
 
 .tab:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--overlay-2);
 }
 
 .tab .icon {
@@ -690,7 +732,7 @@ button.level-badge.clickable:hover {
 }
 
 .sheet-header .back-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--overlay-2);
 }
 
 .step-dots {
@@ -746,7 +788,7 @@ button.level-badge.clickable:hover {
 .why-box:focus {
   outline: none;
   border-color: var(--accent);
-  background: #1c1c20;
+  background: var(--hover-fill);
 }
 
 .text-input::placeholder {
@@ -798,7 +840,7 @@ button.level-badge.clickable:hover {
   border-radius: 999px;
   padding: 6px 12px;
   font-size: 12px;
-  color: #E4E4E7;
+  color: var(--text-loud);
   margin-bottom: 20px;
 }
 
@@ -1056,7 +1098,9 @@ textarea:focus-visible {
   justify-content: center;
   font-size: 15px;
   font-weight: 700;
-  color: var(--bg);
+  /* Fixed dark text — these circles are always light-toned (amber/silver/bronze)
+     regardless of app theme, so contrast needs a fixed dark value, not var(--bg). */
+  color: #1C1C1E;
 }
 
 .podium-avatar.rank-1 { background: var(--accent); width: 48px; height: 48px; font-size: 17px; }
@@ -1135,7 +1179,7 @@ textarea:focus-visible {
 }
 
 .leaderboard-row:hover {
-  background: #1c1c20;
+  background: var(--hover-fill);
 }
 
 .leaderboard-row.you {
@@ -1207,7 +1251,7 @@ textarea:focus-visible {
 }
 
 .subpage-header .back-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--overlay-2);
 }
 
 .subpage-title {
@@ -1231,7 +1275,7 @@ textarea:focus-visible {
 }
 
 .settings-row[data-tab]:hover {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--overlay-1);
 }
 
 .settings-row + .settings-row {
@@ -1464,5 +1508,141 @@ textarea:focus-visible {
 }
 
 .settings-row.cyclable:hover {
-  background: rgba(255, 255, 255, 0.025);
+  background: var(--overlay-1);
+}
+
+/* ---- Generic modal (badge detail, day detail, pickers) ---- */
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: flex-end;
+  z-index: 20;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), visibility 0.25s;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-sheet {
+  background: var(--bg);
+  width: 100%;
+  max-height: 72%;
+  overflow-y: auto;
+  border-radius: 24px 24px 0 0;
+  border-top: 1px solid var(--card-border);
+  padding: 20px 18px calc(18px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(28px);
+  transition: transform 0.32s var(--ease);
+}
+
+.modal-overlay.open .modal-sheet {
+  transform: translateY(0);
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 650;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.modal-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+
+.modal-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 4px;
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease);
+}
+
+.modal-option:hover {
+  background: var(--overlay-1);
+}
+
+.modal-option + .modal-option {
+  border-top: 0.5px solid var(--divider);
+}
+
+.modal-option .opt-label {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.modal-option.locked .opt-label {
+  color: var(--text-tertiary);
+}
+
+.modal-option .opt-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.modal-option .opt-check {
+  color: var(--accent);
+}
+
+.modal-badge-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 6px 0 8px;
+}
+
+.modal-badge-detail .badge-circle {
+  width: 68px;
+  height: 68px;
+}
+
+.modal-badge-detail .modal-title {
+  margin-bottom: 0;
+}
+
+.modal-badge-detail .status-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.modal-badge-detail .status-pill.earned {
+  background: var(--accent-fill);
+  color: var(--accent-on-fill);
+}
+
+.modal-badge-detail .status-pill.locked {
+  background: var(--locked-fill);
+  color: var(--text-tertiary);
+}
+
+.modal-badge-detail .modal-body {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 260px;
+}
+
+.day-detail-stats {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
 }

@@ -172,29 +172,27 @@
 
           <div class="section-label">Notifications</div>
           <div class="group-card">
-            <div class="settings-row">
+            <div class="settings-row cyclable" id="row-morning-time">
               <span class="row-label">Morning message</span>
-              <span class="row-value">8:00 AM</span>
+              <span class="row-value" id="morning-time-value">8:00 AM</span>
               <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
             </div>
             <div class="settings-row">
               <span class="row-label">Check-in reminders</span>
               <div class="toggle on" id="toggle-checkins"></div>
             </div>
-            <div class="settings-row">
+            <div class="settings-row cyclable" id="row-message-style">
               <span class="row-label">Message style</span>
-              <span class="row-value">Coach</span>
+              <span class="row-value" id="message-style-value">Coach</span>
               <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
             </div>
           </div>
 
+          <div class="section-label">App limits</div>
+          <div class="group-card" id="app-limits-card"></div>
+
           <div class="section-label">Screen time</div>
           <div class="group-card">
-            <div class="settings-row cyclable" id="app-limit-row">
-              <span class="row-label">App limits</span>
-              <span class="row-value" id="app-limit-value">Instagram &middot; 45 min/day</span>
-              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
-            </div>
             <div class="settings-row">
               <span class="icon-slot accent" data-icon="shield" data-size="16"></span>
               <span class="row-label">Streak freezes</span>
@@ -326,6 +324,11 @@
           </div>
           <button class="sheet-cta" id="goal-cta">Continue</button>
         </div>
+      </div>
+
+      <!-- Generic modal (badge detail, day detail, pickers) -->
+      <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-sheet" id="modal-sheet"></div>
       </div>
 
     </div>
