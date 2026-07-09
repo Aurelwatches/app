@@ -17,8 +17,17 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: List available simulators
-        run: xcrun simctl list devices available
+      - name: Pick an available simulator
+        run: |
+          xcrun simctl list devices available
+          DEVICE_NAME=$(xcrun simctl list devices available --json \
+            | jq -r '[.devices[][] | select(.name | test("iPhone"))][0].name')
+          if [ -z "$DEVICE_NAME" ] || [ "$DEVICE_NAME" = "null" ]; then
+            echo "No iPhone simulator found on this runner" >&2
+            exit 1
+          fi
+          echo "Using simulator: $DEVICE_NAME"
+          echo "DEVICE_NAME=$DEVICE_NAME" >> "$GITHUB_ENV"
 
       - name: Build for simulator
         run: |
@@ -26,12 +35,12 @@ jobs:
             -project GoalsApp.xcodeproj \
             -scheme GoalsApp \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -destination "platform=iOS Simulator,name=$DEVICE_NAME" \
             CODE_SIGNING_ALLOWED=NO
 
       - name: Boot simulator and capture screenshot
         run: |
-          xcrun simctl boot "iPhone 15" || true
+          xcrun simctl boot "$DEVICE_NAME" || true
           sleep 5
           APP_PATH=$(find ~/Library/Developer/Xcode/DerivedData -name "GoalsApp.app" -path "*iphonesimulator*" | head -1)
           echo "App path: $APP_PATH"
