@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GoalsApp Preview</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="device">
+    <div class="screen">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="dots"></div>
+        <div class="status-icons">
+          <span class="icon-slot" data-icon="chartBar" data-size="14"></span>
+          <div class="battery"></div>
+        </div>
+      </div>
+
+      <div class="content">
+
+        <!-- Today -->
+        <section id="page-today" class="page active">
+          <div class="home-header">
+            <div>
+              <div class="date" id="today-date"></div>
+              <div class="greeting">Good morning</div>
+            </div>
+            <div class="level-badge">Lvl <span id="level-num">7</span></div>
+          </div>
+
+          <div class="day-strip" id="day-strip"></div>
+
+          <div class="ring-wrap">
+            <div class="ring">
+              <svg width="168" height="168" viewBox="0 0 180 180">
+                <circle class="ring-track" cx="90" cy="90" r="78" />
+                <circle class="ring-progress" id="ring-progress" cx="90" cy="90" r="78" stroke-dasharray="490" stroke-dashoffset="490" />
+              </svg>
+              <div class="ring-center">
+                <div class="count" id="ring-count">0/0</div>
+                <div class="label">tasks today</div>
+              </div>
+            </div>
+            <button class="details-btn" data-tab="tasks">View details</button>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-card">
+              <div class="stat-label"><span class="icon-slot warm" data-icon="flame" data-size="15"></span>Streak</div>
+              <div class="stat-value">12 days</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label"><span class="icon-slot accent" data-icon="star" data-size="15"></span>Next level</div>
+              <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+              <div class="bar-caption">340/500 xp</div>
+            </div>
+          </div>
+
+          <div class="section-label">Quick actions</div>
+          <div class="quick-actions">
+            <button class="quick-tile" id="qa-goals"><span class="icon accent icon-slot" data-icon="target" data-size="18"></span><span class="label">Goals</span></button>
+            <button class="quick-tile" data-tab="history"><span class="icon accent icon-slot" data-icon="history" data-size="18"></span><span class="label">History</span></button>
+            <button class="quick-tile" data-tab="insights"><span class="icon accent icon-slot" data-icon="chartBar" data-size="18"></span><span class="label">Insights</span></button>
+            <button class="quick-tile" data-tab="profile"><span class="icon accent icon-slot" data-icon="settings" data-size="18"></span><span class="label">Settings</span></button>
+          </div>
+
+          <div class="message-card">
+            <div class="meta"><span class="icon-slot accent" data-icon="message" data-size="14"></span>9:02 AM</div>
+            <div class="body">You're one task from tying your best streak. The outline shouldn't take long, want to knock it out now?</div>
+          </div>
+        </section>
+
+        <!-- Tasks -->
+        <section id="page-tasks" class="page">
+          <div class="tasks-header">
+            <div class="title">Tasks</div>
+            <div class="subtitle" id="tasks-subtitle"></div>
+          </div>
+          <div id="goal-groups"></div>
+        </section>
+
+        <!-- Insights placeholder -->
+        <section id="page-insights" class="page">
+          <div class="placeholder">Insights &mdash; coming next</div>
+        </section>
+
+        <!-- Profile -->
+        <section id="page-profile" class="page">
+          <div class="profile-header">
+            <div class="avatar">B</div>
+            <div class="profile-name">Braydon</div>
+            <div class="level-badge">Lvl 7</div>
+          </div>
+          <div class="section-label">Leaderboard</div>
+          <div id="podium" class="podium"></div>
+          <div id="leaderboard-list" class="leaderboard-list"></div>
+        </section>
+
+        <!-- History placeholder (reached via quick action, not a tab) -->
+        <section id="page-history" class="page">
+          <div class="placeholder">History &mdash; coming next</div>
+        </section>
+
+      </div>
+
+      <button class="fab" id="fab-add" style="display:none;"><span class="icon-slot" data-icon="plus" data-size="20"></span></button>
+
+      <div class="tab-bar">
+        <button class="tab active" data-tab="today"><span class="icon icon-slot" data-icon="home" data-size="20"></span>Today</button>
+        <button class="tab" data-tab="tasks"><span class="icon icon-slot" data-icon="checklist" data-size="20"></span>Tasks</button>
+        <button class="tab" data-tab="insights"><span class="icon icon-slot" data-icon="chartBar" data-size="20"></span>Insights</button>
+        <button class="tab" data-tab="profile"><span class="icon icon-slot" data-icon="person" data-size="20"></span>Profile</button>
+      </div>
+
+      <!-- Goal creation sheet -->
+      <div class="sheet-overlay" id="goal-sheet">
+        <div class="sheet">
+          <div class="sheet-header">
+            <button class="back-btn" id="goal-back"><span class="icon-slot" data-icon="chevronLeft" data-size="18"></span></button>
+            <div class="step-dots">
+              <div class="dot" data-step="0"></div>
+              <div class="dot" data-step="1"></div>
+              <div class="dot" data-step="2"></div>
+            </div>
+            <div style="width:20px;"></div>
+          </div>
+          <div class="sheet-body">
+            <div id="goal-step-0">
+              <h2>What's your goal?</h2>
+              <input class="text-input" id="goal-name" placeholder="e.g. Launch business" />
+              <div class="section-label" style="margin-top:20px;">Pick an icon</div>
+              <div class="icon-grid" id="icon-grid"></div>
+            </div>
+            <div id="goal-step-1" style="display:none;">
+              <div class="why-chip" id="why-recap"></div>
+              <h2>Why does this matter to you?</h2>
+              <p class="hint">Your coach will remind you of this when motivation dips.</p>
+              <textarea class="why-box" id="goal-why" placeholder="I want to finally build something of my own instead of just talking about it..."></textarea>
+            </div>
+            <div id="goal-step-2" style="display:none;">
+              <h2>Almost done</h2>
+              <div class="section-label" style="margin-top:20px;">How often?</div>
+              <div class="freq-row" id="freq-row"></div>
+              <div class="review-card">
+                <div class="review-title"><span id="review-icon"></span><span id="review-name"></span></div>
+                <div class="review-why" id="review-why"></div>
+              </div>
+            </div>
+          </div>
+          <button class="sheet-cta" id="goal-cta">Continue</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="icons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
