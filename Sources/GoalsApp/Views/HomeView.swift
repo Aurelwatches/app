@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var showingGoalCreation = false
+
     // Sample data for now — will be replaced by a view model backed by the API.
     private let completedTasks = 3
     private let totalTasks = 5
@@ -37,6 +39,9 @@ struct HomeView: View {
                 .padding(.top, 12)
                 .padding(.bottom, 24)
             }
+        }
+        .sheet(isPresented: $showingGoalCreation) {
+            GoalCreationFlow()
         }
     }
 
@@ -103,10 +108,12 @@ struct HomeView: View {
                 .foregroundStyle(Color.appTextSecondary)
 
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 4), spacing: 8) {
-                QuickActionTile(icon: "target", label: "Goals")
-                QuickActionTile(icon: "clock.arrow.circlepath", label: "History")
-                QuickActionTile(icon: "chart.bar.fill", label: "Insights")
-                QuickActionTile(icon: "gearshape.fill", label: "Settings")
+                QuickActionTile(icon: "target", label: "Goals") {
+                    showingGoalCreation = true
+                }
+                QuickActionTile(icon: "clock.arrow.circlepath", label: "History") {}
+                QuickActionTile(icon: "chart.bar.fill", label: "Insights") {}
+                QuickActionTile(icon: "gearshape.fill", label: "Settings") {}
             }
         }
     }
@@ -259,19 +266,23 @@ private struct ProgressBar: View {
 private struct QuickActionTile: View {
     let icon: String
     let label: String
+    let action: () -> Void
 
     var body: some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon)
-                .font(.system(size: 18))
-                .foregroundStyle(Color.appAccent)
-            Text(label)
-                .font(.caption2)
-                .foregroundStyle(Color.appTextPrimary)
+        Button(action: action) {
+            VStack(spacing: 6) {
+                Image(systemName: icon)
+                    .font(.system(size: 18))
+                    .foregroundStyle(Color.appAccent)
+                Text(label)
+                    .font(.caption2)
+                    .foregroundStyle(Color.appTextPrimary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(RoundedRectangle(cornerRadius: 12).fill(Color.appCard))
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color.appCard))
+        .buttonStyle(.plain)
     }
 }
 
