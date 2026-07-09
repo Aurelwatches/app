@@ -17,8 +17,18 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Pick an available simulator
+      - name: Show project schemes
+        run: xcodebuild -list -project GoalsApp.xcodeproj
+
+      - name: Pick scheme and simulator
         run: |
+          set -x
+          SCHEME=$(xcodebuild -list -project GoalsApp.xcodeproj -json | jq -r '.project.schemes[0]')
+          if [ -z "$SCHEME" ] || [ "$SCHEME" = "null" ]; then
+            SCHEME="GoalsApp"
+          fi
+          echo "SCHEME=$SCHEME" >> "$GITHUB_ENV"
+
           xcrun simctl list devices available
           DEVICE_NAME=$(xcrun simctl list devices available --json \
             | jq -r '[.devices[][] | select(.name | test("iPhone"))][0].name')
@@ -26,14 +36,15 @@ jobs:
             echo "No iPhone simulator found on this runner" >&2
             exit 1
           fi
-          echo "Using simulator: $DEVICE_NAME"
           echo "DEVICE_NAME=$DEVICE_NAME" >> "$GITHUB_ENV"
 
       - name: Build for simulator
         run: |
+          set -x
+          echo "Building scheme '$SCHEME' for device '$DEVICE_NAME'"
           xcodebuild build \
             -project GoalsApp.xcodeproj \
-            -scheme GoalsApp \
+            -scheme "$SCHEME" \
             -sdk iphonesimulator \
             -destination "platform=iOS Simulator,name=$DEVICE_NAME" \
             CODE_SIGNING_ALLOWED=NO
