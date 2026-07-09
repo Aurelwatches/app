@@ -25,7 +25,7 @@ struct RootTabView: View {
             HomeView()
                 .tabItem { Label("Today", systemImage: "house.fill") }
 
-            PlaceholderView(title: "Tasks")
+            TasksView()
                 .tabItem { Label("Tasks", systemImage: "checklist") }
 
             PlaceholderView(title: "Insights")
