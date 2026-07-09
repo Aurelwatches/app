@@ -1,0 +1,17 @@
+# Xcode / XcodeGen
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+DerivedData/
+.build/
+
+# macOS
+.DS_Store
+
+# Node
+backend/node_modules/
+backend/.env
+
+# Editor
+.vscode/
+.idea/
