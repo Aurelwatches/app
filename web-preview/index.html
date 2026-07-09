@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Interactive preview of GoalsApp — a gamified goals and habit app." />
   <title>GoalsApp Preview</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230B0B0D'/%3E%3Ccircle cx='12' cy='12' r='7.5' fill='none' stroke='%23E2A146' stroke-width='2.4'/%3E%3Ccircle cx='12' cy='12' r='1.6' fill='%23E2A146'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -80,9 +83,14 @@
           <div id="goal-groups"></div>
         </section>
 
-        <!-- Insights placeholder -->
+        <!-- Insights -->
         <section id="page-insights" class="page">
-          <div class="placeholder">Insights &mdash; coming next</div>
+          <div class="empty-state">
+            <div class="empty-icon"><span class="icon-slot" data-icon="chartBar" data-size="24"></span></div>
+            <div class="empty-title">Insights are on the way</div>
+            <div class="empty-body">Once Screen Time access is connected, you'll see which apps hold you back and what to do about it.</div>
+            <div class="empty-tag">Coming in phase 2</div>
+          </div>
         </section>
 
         <!-- Profile -->
@@ -97,9 +105,13 @@
           <div id="leaderboard-list" class="leaderboard-list"></div>
         </section>
 
-        <!-- History placeholder (reached via quick action, not a tab) -->
+        <!-- History (reached via quick action, not a tab) -->
         <section id="page-history" class="page">
-          <div class="placeholder">History &mdash; coming next</div>
+          <div class="empty-state">
+            <div class="empty-icon"><span class="icon-slot" data-icon="history" data-size="24"></span></div>
+            <div class="empty-title">Your history will build up here</div>
+            <div class="empty-body">Every completed day gets logged — check back after your first full day for a week-by-week view.</div>
+          </div>
         </section>
 
       </div>
