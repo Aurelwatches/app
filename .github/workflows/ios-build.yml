@@ -37,24 +37,18 @@ jobs:
           fi
           echo "SCHEME=$SCHEME" >> "$GITHUB_ENV"
 
-          xcrun simctl list devices available
-          # Pick by ID on the newest installed iOS runtime, not by name — a device
-          # model's simulator image isn't guaranteed to exist for every runtime
-          # (e.g. "iPhone 15 Pro" tops out at iOS 17.5 on some runners, while
-          # xcodebuild defaults to the latest SDK when no OS is given, so a
-          # name-only match can point at an OS that model never got).
-          DEVICE_ID=$(xcrun simctl list devices available --json | jq -r '
-            .devices
-            | to_entries
-            | map(select(.key | test("iOS")))
-            | sort_by(.key)
-            | last
-            | .value
-            | map(select(.name | test("iPhone")))
-            | first
-            | .id
-          ')
-          if [ -z "$DEVICE_ID" ] || [ "$DEVICE_ID" = "null" ]; then
+          # Parse the plain-text listing directly instead of --json — the JSON
+          # key format didn't match what we assumed (returned null for a
+          # filter that should have matched), so use the format we can see
+          # actually works. Sections print oldest-to-newest, so the last
+          # "-- iOS X.Y --" header is the newest runtime.
+          xcrun simctl list devices available > /tmp/sims.txt
+          cat /tmp/sims.txt
+          SECTION_LINE=$(grep -n '^-- iOS ' /tmp/sims.txt | tail -1 | cut -d: -f1)
+          DEVICE_ID=$(tail -n +"$SECTION_LINE" /tmp/sims.txt \
+            | grep -m1 'iPhone' \
+            | grep -oE '[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}')
+          if [ -z "$DEVICE_ID" ]; then
             echo "No iPhone simulator found on this runner" >&2
             exit 1
           fi
