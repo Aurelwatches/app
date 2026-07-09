@@ -127,14 +127,43 @@ body {
   font-variant-numeric: tabular-nums;
   padding: 6px 12px;
   border-radius: 999px;
+  border: none;
+}
+
+/* ---- Reusable "this is a button" reset ---- */
+
+.clickable {
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.15s var(--ease);
+}
+
+.clickable:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.clickable:active {
+  transform: scale(0.98);
+}
+
+button.level-badge.clickable:hover {
+  background: #6b4718;
 }
 
 /* ---- Day strip ---- */
 
 .day-strip {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  row-gap: 12px;
   margin-bottom: 20px;
+}
+
+.day-cell.missed .letter,
+.day-cell.missed .num {
+  color: var(--text-tertiary);
 }
 
 .day-cell {
@@ -1319,4 +1348,121 @@ textarea:focus-visible {
   background: var(--card);
   color: var(--text-primary);
   font-weight: 600;
+}
+
+/* ---- Level hero ---- */
+
+.level-hero {
+  text-align: center;
+  padding: 8px 0 24px;
+}
+
+.level-hero-num {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.level-hero .bar-track {
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.level-hero .bar-caption {
+  margin-top: 8px;
+}
+
+/* ---- Badge grid ---- */
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px 8px;
+  margin-bottom: 4px;
+}
+
+.badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.badge-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-circle.unlocked {
+  background: var(--accent-fill);
+  color: var(--accent-on-fill);
+}
+
+.badge-circle.locked {
+  background: var(--locked-fill);
+  border: 1px solid var(--card-border);
+  color: var(--text-disabled);
+}
+
+.badge-label {
+  font-size: 10px;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.badge-item.locked .badge-label {
+  color: var(--text-tertiary);
+}
+
+.badge-new-tag {
+  position: absolute;
+  top: -4px;
+  right: 4px;
+  background: var(--accent);
+  color: var(--accent-fill);
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 999px;
+}
+
+/* ---- Streak hero ---- */
+
+.streak-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0 26px;
+  gap: 8px;
+}
+
+.streak-hero-num {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.streak-hero-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ---- Cyclable row (tap to change a value) ---- */
+
+.settings-row.cyclable {
+  cursor: pointer;
+}
+
+.settings-row.cyclable:hover {
+  background: rgba(255, 255, 255, 0.025);
 }

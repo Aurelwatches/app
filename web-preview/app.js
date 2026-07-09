@@ -35,6 +35,20 @@ const leaderboard = [
   { rank: 6, name: "Morgan", xp: 690 },
 ];
 
+const badges = [
+  { name: "First step", icon: "flag", unlocked: true },
+  { name: "7 day streak", icon: "flame", unlocked: true },
+  { name: "Goal getter", icon: "target", unlocked: true, isNew: true },
+  { name: "Early riser", icon: "sun", unlocked: false },
+  { name: "Night owl", icon: "moon", unlocked: false },
+  { name: "30 day streak", icon: "trophy", unlocked: false },
+  { name: "Comeback", icon: "refresh", unlocked: false },
+  { name: "Level 10", icon: "medal", unlocked: false },
+];
+
+const appLimits = ["Instagram · 30 min/day", "Instagram · 45 min/day", "Instagram · 60 min/day"];
+let appLimitIndex = 1;
+
 // ---- Icon hydration ----
 
 function hydrateIcons(root = document) {
@@ -311,6 +325,56 @@ document.getElementById("toggle-checkins").addEventListener("click", (e) => {
   e.target.classList.toggle("on");
 });
 
+document.getElementById("app-limit-row").addEventListener("click", () => {
+  appLimitIndex = (appLimitIndex + 1) % appLimits.length;
+  document.getElementById("app-limit-value").textContent = appLimits[appLimitIndex];
+});
+
+// ---- Level / Awards ----
+
+function renderBadgeGrid() {
+  const grid = document.getElementById("badge-grid");
+  grid.innerHTML = badges.map(b => `
+    <div class="badge-item ${b.unlocked ? "" : "locked"}">
+      ${b.isNew ? '<span class="badge-new-tag">new</span>' : ""}
+      <div class="badge-circle ${b.unlocked ? "unlocked" : "locked"}">${icon(b.icon, b.unlocked ? 22 : 20)}</div>
+      <span class="badge-label">${b.name}</span>
+    </div>
+  `).join("");
+}
+
+// ---- Streak ----
+
+function renderStreakStrip() {
+  const labels = ["S", "M", "T", "W", "T", "F", "S"];
+  const today = new Date(2026, 6, 9); // July 9, 2026 — matches the rest of the prototype's "today"
+  const days = [];
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const state = i === 0 ? "today" : i <= 11 ? "completed" : "missed";
+    days.push({ letter: labels[d.getDay()], num: d.getDate(), state });
+  }
+
+  const strip = document.getElementById("streak-strip");
+  strip.innerHTML = days.map(day => `
+    <div class="day-cell ${day.state}">
+      <span class="letter">${day.letter}</span>
+      <span class="num">${day.num}</span>
+      <span class="dot"></span>
+    </div>
+  `).join("");
+}
+
+// ---- FAB: add task ----
+
+document.getElementById("fab-add").addEventListener("click", () => {
+  const lastGroup = goalGroups[goalGroups.length - 1];
+  lastGroup.tasks.push({ title: "New task", done: false });
+  renderTasks();
+  updateRing();
+});
+
 // ---- Init ----
 
 hydrateIcons();
@@ -320,3 +384,5 @@ updateRing();
 renderLeaderboard();
 renderThemeSwatches();
 renderAppearanceSegmented();
+renderBadgeGrid();
+renderStreakStrip();

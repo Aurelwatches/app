@@ -29,7 +29,7 @@
               <div class="date" id="today-date"></div>
               <div class="greeting">Good morning</div>
             </div>
-            <div class="level-badge">Lvl <span id="level-num">7</span></div>
+            <button class="level-badge clickable" data-tab="level">Lvl <span id="level-num">7</span></button>
           </div>
 
           <div class="day-strip" id="day-strip"></div>
@@ -49,15 +49,15 @@
           </div>
 
           <div class="stat-row">
-            <div class="stat-card">
+            <button class="stat-card clickable" data-tab="streak">
               <div class="stat-label"><span class="icon-slot warm" data-icon="flame" data-size="15"></span>Streak</div>
               <div class="stat-value">12 days</div>
-            </div>
-            <div class="stat-card">
+            </button>
+            <button class="stat-card clickable" data-tab="level">
               <div class="stat-label"><span class="icon-slot accent" data-icon="star" data-size="15"></span>Next level</div>
               <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
               <div class="bar-caption">340/500 xp</div>
-            </div>
+            </button>
           </div>
 
           <div class="section-label">Quick actions</div>
@@ -102,19 +102,24 @@
           </div>
 
           <div class="stat-row">
-            <div class="stat-card">
+            <button class="stat-card clickable" data-tab="streak">
               <div class="stat-label"><span class="icon-slot warm" data-icon="flame" data-size="15"></span>Streak</div>
               <div class="stat-value">12 days</div>
-            </div>
-            <div class="stat-card">
+            </button>
+            <button class="stat-card clickable" data-tab="level">
               <div class="stat-label"><span class="icon-slot accent" data-icon="star" data-size="15"></span>Next level</div>
               <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
               <div class="bar-caption">340/500 xp</div>
-            </div>
+            </button>
           </div>
 
           <div class="section-label">Menu</div>
           <div class="group-card">
+            <div class="settings-row" data-tab="level">
+              <span class="icon-slot" data-icon="trophy" data-size="18"></span>
+              <span class="row-label">Level &amp; awards</span>
+              <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
+            </div>
             <div class="settings-row" data-tab="history">
               <span class="icon-slot" data-icon="history" data-size="18"></span>
               <span class="row-label">History</span>
@@ -185,9 +190,9 @@
 
           <div class="section-label">Screen time</div>
           <div class="group-card">
-            <div class="settings-row">
+            <div class="settings-row cyclable" id="app-limit-row">
               <span class="row-label">App limits</span>
-              <span class="row-value">Instagram &middot; 45 min/day</span>
+              <span class="row-value" id="app-limit-value">Instagram &middot; 45 min/day</span>
               <span class="icon-slot chevron" data-icon="chevronRight" data-size="16"></span>
             </div>
             <div class="settings-row">
@@ -207,6 +212,69 @@
             <div class="theme-swatches" id="theme-swatches"></div>
             <div class="row-label" style="margin:18px 0 10px;">Appearance</div>
             <div class="segmented" id="appearance-segmented"></div>
+          </div>
+        </section>
+
+        <!-- Level & Awards -->
+        <section id="page-level" class="page">
+          <div class="subpage-header">
+            <button class="back-btn" data-tab="today"><span class="icon-slot" data-icon="chevronLeft" data-size="18"></span></button>
+            <span class="subpage-title">Level &amp; awards</span>
+            <div style="width:26px;"></div>
+          </div>
+
+          <div class="level-hero">
+            <div class="level-hero-num">Lvl 7</div>
+            <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+            <div class="bar-caption">340/500 xp to level 8</div>
+          </div>
+
+          <div class="section-label">Badges</div>
+          <div class="badge-grid" id="badge-grid"></div>
+
+          <div class="section-label">Perks</div>
+          <div class="group-card">
+            <div class="settings-row">
+              <span class="icon-slot accent" data-icon="shield" data-size="16"></span>
+              <span class="row-label">Streak freezes</span>
+              <span class="row-value">2 available</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Streak -->
+        <section id="page-streak" class="page">
+          <div class="subpage-header">
+            <button class="back-btn" data-tab="today"><span class="icon-slot" data-icon="chevronLeft" data-size="18"></span></button>
+            <span class="subpage-title">Streak</span>
+            <div style="width:26px;"></div>
+          </div>
+
+          <div class="streak-hero">
+            <span class="icon-slot warm" data-icon="flame" data-size="36"></span>
+            <div class="streak-hero-num">12 days</div>
+            <div class="streak-hero-sub">Your longest streak yet</div>
+          </div>
+
+          <div class="section-label">Last 14 days</div>
+          <div class="day-strip" id="streak-strip"></div>
+
+          <div class="section-label">Next milestone</div>
+          <div class="group-card" style="padding:14px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <span class="row-label">30 day streak</span>
+              <span class="row-value">12/30</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
+          </div>
+
+          <div class="section-label">Perks</div>
+          <div class="group-card">
+            <div class="settings-row">
+              <span class="icon-slot accent" data-icon="shield" data-size="16"></span>
+              <span class="row-label">Streak freezes</span>
+              <span class="row-value">2 available</span>
+            </div>
           </div>
         </section>
 
